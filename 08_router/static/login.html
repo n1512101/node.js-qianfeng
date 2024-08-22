@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div>
+    username: <input id="username"/>
+  </div>
+  <div>
+    password: <input type="password" id="password">
+  </div>
+  <div>
+    <button id="login">login-get</button>
+    <button id="login-post">login-post</button>
+  </div>
+
+  <script>
+    const login = document.querySelector('#login')
+    const loginPost = document.querySelector('#login-post')
+    const username = document.querySelector('#username')
+    const password = document.querySelector('#password')
+
+    login.addEventListener('click', () => {
+      fetch(`/api/login?username=${username.value}&password=${password.value}`)
+      .then(res => res.json())
+      .then(res => console.log(res))
+    })
+
+    loginPost.addEventListener('click', () => {
+      fetch(`/api/loginpost`, {
+        method: 'POST',
+        body: JSON.stringify({
+          username: username.value,
+          password: password.value
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(res => res.text()).then(res => {
+        console.log(res)
+      })
+    })
+  </script>
+</body>
+</html>
